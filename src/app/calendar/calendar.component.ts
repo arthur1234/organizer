@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import {DateService} from '../shared/date.service';
+import {Moment} from 'moment';
 
 interface Day {
   value: moment.Moment;
@@ -40,8 +41,8 @@ export class CalendarComponent implements OnInit {
             .fill(0)
             .map(() => {
               const value = date.add(1, 'day').clone();
-              const  active = moment().isSame(value, 'month');
-              const  disabled = !now.isSame(value, 'date');
+              const  active = moment().isSame(value, 'date');
+              const  disabled = !now.isSame(value, 'month');
               const selected = now.isSame(value, 'date');
 
               return {
@@ -50,7 +51,10 @@ export class CalendarComponent implements OnInit {
             })
       });
     }
-    console.log(calendar);
+    this.calendar = calendar;
   }
 
+  select(day: Moment) {
+    this.dateService.changeDate(day);
+  }
 }
